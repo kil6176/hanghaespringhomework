@@ -1,6 +1,7 @@
 package com.sparta.hanghaespringhomework1.repository;
 
 
+import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
 import com.sparta.hanghaespringhomework1.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 

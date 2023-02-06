@@ -2,6 +2,7 @@ package com.sparta.hanghaespringhomework1.controller;
 
 
 import com.sparta.hanghaespringhomework1.dto.BoardRequestDto;
+import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
 import com.sparta.hanghaespringhomework1.entity.Board;
 import com.sparta.hanghaespringhomework1.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -21,22 +22,27 @@ public class BoardController {
         return new ModelAndView("index");
     }
 
-    @PostMapping("/api/boards")
+    @PostMapping("/api/board")
     public Board createBoard(@RequestBody BoardRequestDto requestDto) {
         return boardService.createBoard(requestDto);
     }
 
-    @GetMapping("/api/boards")
-    public List<Board> getBoards() {
-        return boardService.getBoards();
+    @GetMapping("/api/board")
+    public List<BoardResponseDto> getBoardList() {
+        return boardService.getBoardList();
     }
 
-    @PutMapping("/api/boards/{id}")
+    @GetMapping("/api/board/{id}")
+    public BoardResponseDto getBoard(@PathVariable Long id) {
+        return boardService.getBoard(id);
+    }
+
+    @PutMapping("/api/board/{id}")
     public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) {
         return boardService.update(id, requestDto);
     }
 
-    @DeleteMapping("/api/boards/{id}")
+    @DeleteMapping("/api/board/{id}")
     public Long deleteBoard(@PathVariable Long id) {
         return boardService.deleteBoard(id);
     }

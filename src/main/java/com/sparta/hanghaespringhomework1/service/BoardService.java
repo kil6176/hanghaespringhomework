@@ -2,12 +2,14 @@ package com.sparta.hanghaespringhomework1.service;
 
 
 import com.sparta.hanghaespringhomework1.dto.BoardRequestDto;
+import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
 import com.sparta.hanghaespringhomework1.entity.Board;
 import com.sparta.hanghaespringhomework1.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,8 +26,26 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<Board> getBoards() {
-        return boardRepository.findAllByOrderByModifiedAtDesc();
+    public List<BoardResponseDto> getBoardList() {
+        List<Board> boardList = boardRepository.findAllByOrderByModifiedAtDesc();
+        List<BoardResponseDto> boardResponseDto = new ArrayList<>();
+
+        for (Board board : boardList) {
+            boardResponseDto.add(new BoardResponseDto(board));
+        }
+
+        return boardResponseDto;
+    }
+
+    @Transactional(readOnly = true)
+    public BoardResponseDto getBoard(Long id) {
+        Board board = boardRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+
+        BoardResponseDto boardResponseDto = new BoardResponseDto(board);
+
+        return boardResponseDto;
     }
 
     @Transactional
