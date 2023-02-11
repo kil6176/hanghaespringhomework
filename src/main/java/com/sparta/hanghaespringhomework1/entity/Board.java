@@ -16,34 +16,23 @@ public class Board extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private String username;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "username")
+    private User user;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    @JsonIgnore
-    private String password;
-    @Column(nullable = false)
     private String contents;
 
-    public Board(String username, String password, String contents, String title) {
-        this.username = username;
-        this.title = title;
-        this.password = password;
-        this.contents = contents;
-    }
 
-    public Board(BoardRequestDto requestDto) {
-        this.username = requestDto.getUsername();
+    public Board(BoardRequestDto requestDto, User user) {
+        this.user = user;
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
     }
 
     public void update(BoardRequestDto boardRequestDto) {
-        this.username = boardRequestDto.getUsername();
         this.title = boardRequestDto.getTitle();
         this.contents = boardRequestDto.getContents();
-        this.password = boardRequestDto.getPassword();
     }
 }
