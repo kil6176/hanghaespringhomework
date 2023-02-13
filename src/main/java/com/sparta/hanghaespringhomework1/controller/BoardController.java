@@ -1,16 +1,22 @@
 package com.sparta.hanghaespringhomework1.controller;
 
 
+import com.sparta.hanghaespringhomework1.dto.BoardCommentDto;
 import com.sparta.hanghaespringhomework1.dto.BoardRequestDto;
 import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
-import com.sparta.hanghaespringhomework1.entity.Board;
+import com.sparta.hanghaespringhomework1.entity.Message;
 import com.sparta.hanghaespringhomework1.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.nio.charset.Charset;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,12 +35,12 @@ public class BoardController {
     }
 
     @GetMapping("/api/board")
-    public List<BoardResponseDto> getBoardList() {
+    public JSONObject getBoardList() {
         return boardService.getBoardList();
     }
 
     @GetMapping("/api/board/{id}")
-    public BoardResponseDto getBoard(@PathVariable Long id) {
+    public BoardCommentDto getBoard(@PathVariable Long id) {
         return boardService.getBoard(id);
     }
 
@@ -44,8 +50,16 @@ public class BoardController {
     }
 
     @DeleteMapping("/api/board/{id}")
-    public String deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
-        return boardService.deleteBoard(id, requestDto, request);
+    public ResponseEntity<Message> deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
+        boardService.deleteBoard(id, requestDto, request);
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        message.setStatus(HttpStatus.OK.value());
+        message.setMessage("게시물 삭제 완료");
+        message.setData(null);
+
+        return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }
 
 }

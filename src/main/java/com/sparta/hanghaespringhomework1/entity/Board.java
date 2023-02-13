@@ -1,8 +1,6 @@
 package com.sparta.hanghaespringhomework1.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.hanghaespringhomework1.dto.BoardRequestDto;
-import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Board extends Timestamped {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

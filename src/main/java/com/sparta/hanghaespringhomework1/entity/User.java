@@ -2,10 +2,8 @@ package com.sparta.hanghaespringhomework1.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.pl.REGON;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 @Getter
 @NoArgsConstructor
@@ -19,7 +17,7 @@ public class User {
     // nullable: null 허용 여부
     // unique: 중복 허용 여부 (false 일때 중복 허용)
 
-    @Column(nullable = false, unique = true, name = "username")
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
