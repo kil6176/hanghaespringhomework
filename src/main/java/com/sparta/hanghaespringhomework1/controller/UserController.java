@@ -28,18 +28,18 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid SignupRequestDto signupRequestDto, BindingResult bindingResult) {
+    public ResponseEntity<?> signup(@Valid SignupRequestDto signupRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
         }
 
         userService.signup(signupRequestDto);
-        Message message = new Message();
+
+        Message message = new Message(HttpStatus.OK.value(), "회원가입 완료", null);
+        
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-        message.setStatus(HttpStatus.OK.value());
-        message.setMessage("회원가입 완료");
-        message.setData(null);
+
 
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }
@@ -50,12 +50,11 @@ public class UserController {
 
         userService.login(loginRequestDto, response);
 
-        Message message = new Message();
+        Message message = new Message(HttpStatus.OK.value(), "로그인 완료", null);
+
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-        message.setStatus(HttpStatus.OK.value());
-        message.setMessage("로그인 완료");
-        message.setData(null);
+
 
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }

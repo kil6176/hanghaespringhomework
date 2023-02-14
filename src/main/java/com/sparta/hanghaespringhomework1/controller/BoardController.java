@@ -52,12 +52,9 @@ public class BoardController {
     @DeleteMapping("/api/board/{id}")
     public ResponseEntity<Message> deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
         boardService.deleteBoard(id, requestDto, request);
-        Message message = new Message();
+        Message message = new Message(HttpStatus.OK.value(), "게시물 삭제 완료", null);
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-        message.setStatus(HttpStatus.OK.value());
-        message.setMessage("게시물 삭제 완료");
-        message.setData(null);
 
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }
