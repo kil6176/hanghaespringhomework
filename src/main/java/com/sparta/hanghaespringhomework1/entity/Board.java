@@ -15,7 +15,7 @@ public class Board extends Timestamped {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "userId")
     private User user;
     @Column(nullable = false)
     private String title;

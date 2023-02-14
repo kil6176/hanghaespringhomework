@@ -1,7 +1,6 @@
 package com.sparta.hanghaespringhomework1.controller;
 
 import com.sparta.hanghaespringhomework1.entity.Message;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,7 +12,6 @@ import java.nio.charset.Charset;
 import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
-@Slf4j
 public class ExceptionController {
 
     // 400
