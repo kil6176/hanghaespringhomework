@@ -35,6 +35,8 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.json:json:20200518'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.14'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 }
 

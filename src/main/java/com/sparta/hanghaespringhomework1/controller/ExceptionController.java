@@ -1,6 +1,6 @@
 package com.sparta.hanghaespringhomework1.controller;
 
-import com.sparta.hanghaespringhomework1.entity.Message;
+import com.sparta.hanghaespringhomework1.dto.Message;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

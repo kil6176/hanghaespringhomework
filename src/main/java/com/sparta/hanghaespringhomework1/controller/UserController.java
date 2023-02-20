@@ -2,7 +2,7 @@ package com.sparta.hanghaespringhomework1.controller;
 
 import com.sparta.hanghaespringhomework1.dto.LoginRequestDto;
 import com.sparta.hanghaespringhomework1.dto.SignupRequestDto;
-import com.sparta.hanghaespringhomework1.entity.Message;
+import com.sparta.hanghaespringhomework1.dto.Message;
 import com.sparta.hanghaespringhomework1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -11,10 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -59,4 +56,13 @@ public class UserController {
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }
 
+    @RequestMapping("/forbidden")
+    public ResponseEntity<Message> getForbidden() {
+        Message message = new Message(HttpStatus.FORBIDDEN.value(), "로그인을 안했거나 권한이 없습니다.", null);
+
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(message, headers, HttpStatus.FORBIDDEN);
+    }
 }
