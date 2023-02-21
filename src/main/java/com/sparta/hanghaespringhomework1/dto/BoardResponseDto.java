@@ -22,5 +22,4 @@ public class BoardResponseDto {
         this.modifiedAt = board.getModifiedAt();
         this.createdAt = board.getCreatedAt();
     }
-
 }

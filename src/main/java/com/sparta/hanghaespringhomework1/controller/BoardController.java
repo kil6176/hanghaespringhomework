@@ -60,6 +60,15 @@ public class BoardController {
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }
 
+    @PostMapping("/api/board/{id}/like")
+    public ResponseEntity<Message> likeBoard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Message message = new Message(HttpStatus.OK.value(), boardService.likeBoard(id, userDetails.getUser()), null);
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+    }
+
 }
 
 

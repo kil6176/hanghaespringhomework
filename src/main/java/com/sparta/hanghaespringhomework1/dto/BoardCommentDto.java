@@ -12,18 +12,22 @@ public class BoardCommentDto {
     private String username;
     private String title;
     private String contents;
+    private Long likes;
+
     private LocalDateTime modifiedAt;
     private LocalDateTime createdAt;
 
     private List<CommentResponseDto> comments;
 
-    public BoardCommentDto(Board board, List<CommentResponseDto> comment) {
+    public BoardCommentDto(Board board, List<CommentResponseDto> comment, Long likes) {
         this.id = board.getId();
         this.username = board.getUser().getUsername();
         this.title = board.getTitle();
         this.contents = board.getContents();
+        this.likes = likes;
         this.comments = comment;
         this.modifiedAt = board.getModifiedAt();
         this.createdAt = board.getCreatedAt();
     }
+
 }

@@ -7,10 +7,8 @@ import com.sparta.hanghaespringhomework1.entity.Board;
 import com.sparta.hanghaespringhomework1.entity.Comment;
 import com.sparta.hanghaespringhomework1.entity.User;
 import com.sparta.hanghaespringhomework1.entity.UserRoleEnum;
-import com.sparta.hanghaespringhomework1.jwt.JwtUtil;
 import com.sparta.hanghaespringhomework1.repository.BoardRepository;
 import com.sparta.hanghaespringhomework1.repository.CommentRepository;
-import com.sparta.hanghaespringhomework1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +21,7 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
     private final BoardRepository boardRepository;
-    private final JwtUtil jwtUtil;
 
     @Transactional
     public CommentResponseDto createComment(CommentRequestDto requestDto, User user, Long id) {
@@ -50,17 +46,6 @@ public class CommentService {
         }
         return commentResponseDto;
     }
-
-//    @Transactional(readOnly = true)
-//    public CommentResponseDto getComment(Long id) {
-//        Comment comment = commentRepository.findById(id).orElseThrow(
-//                () -> new IllegalArgumentException("게시판이 존재하지 않습니다.")
-//        );
-//
-//        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
-//
-//        return commentResponseDto;
-//    }
 
     @Transactional
     public CommentResponseDto update(Long id, CommentRequestDto requestDto, User user) {
