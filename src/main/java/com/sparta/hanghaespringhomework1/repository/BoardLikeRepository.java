@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface BoardLikeRepository extends JpaRepository<BoardLikes, Long> {
     Optional<BoardLikes> findByUserIdAndBoardId(Long userId, Long boardId);
 
-    void deleteByUserIdAndBoardId(Long id, Long id1);
+    void deleteByUserIdAndBoardId(Long userId, Long boardId);
     Long countByBoardId(Long boardId);
 }
