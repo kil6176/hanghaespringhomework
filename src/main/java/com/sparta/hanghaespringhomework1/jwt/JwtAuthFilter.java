@@ -1,7 +1,7 @@
 package com.sparta.hanghaespringhomework1.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.hanghaespringhomework1.dto.Message;
+import com.sparta.hanghaespringhomework1.entity.Message;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.sparta.hanghaespringhomework1.dto;
+package com.sparta.hanghaespringhomework1.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

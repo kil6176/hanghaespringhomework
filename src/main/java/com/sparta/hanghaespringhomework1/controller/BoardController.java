@@ -4,20 +4,16 @@ package com.sparta.hanghaespringhomework1.controller;
 import com.sparta.hanghaespringhomework1.dto.BoardCommentDto;
 import com.sparta.hanghaespringhomework1.dto.BoardRequestDto;
 import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
-import com.sparta.hanghaespringhomework1.dto.Message;
+import com.sparta.hanghaespringhomework1.entity.Message;
 import com.sparta.hanghaespringhomework1.security.UserDetailsImpl;
 import com.sparta.hanghaespringhomework1.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.nio.charset.Charset;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,23 +51,15 @@ public class BoardController {
         boardService.deleteBoard(id, userDetails.getUser());
         Message message = new Message(HttpStatus.OK.value(), "게시물 삭제 완료", null);
 
-        HttpHeaders headers= new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
-        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 
     @PostMapping("/api/board/{id}/like")
     public ResponseEntity<Message> likeBoard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-
         Message message = new Message(HttpStatus.OK.value(), boardService.likeBoard(id, userDetails.getUser()), null);
-
-        HttpHeaders headers= new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-
-        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
-
 }
 
 

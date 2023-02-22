@@ -3,18 +3,15 @@ package com.sparta.hanghaespringhomework1.controller;
 
 import com.sparta.hanghaespringhomework1.dto.CommentRequestDto;
 import com.sparta.hanghaespringhomework1.dto.CommentResponseDto;
-import com.sparta.hanghaespringhomework1.dto.Message;
+import com.sparta.hanghaespringhomework1.entity.Message;
 import com.sparta.hanghaespringhomework1.security.UserDetailsImpl;
 import com.sparta.hanghaespringhomework1.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
@@ -42,22 +39,16 @@ public class CommentController {
     public ResponseEntity<Message> deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         commentService.deleteComment(id, userDetails.getUser());
 
-        HttpHeaders headers= new HttpHeaders();
-
-        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         Message message = new Message(HttpStatus.OK.value(), "댓글 삭제 완료", null);
 
-        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 
     @PostMapping("/api/comment/{id}/like")
     public ResponseEntity<Message> likeComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        HttpHeaders headers= new HttpHeaders();
-
-        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         Message message = new Message(HttpStatus.OK.value(), commentService.likeComment(id, userDetails.getUser()), null);
 
-        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 
 
