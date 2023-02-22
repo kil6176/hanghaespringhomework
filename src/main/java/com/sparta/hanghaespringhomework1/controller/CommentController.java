@@ -41,11 +41,25 @@ public class CommentController {
     @DeleteMapping("/api/comment/{id}")
     public ResponseEntity<Message> deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         commentService.deleteComment(id, userDetails.getUser());
+
         HttpHeaders headers= new HttpHeaders();
+
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         Message message = new Message(HttpStatus.OK.value(), "댓글 삭제 완료", null);
+
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }
+
+    @PostMapping("/api/comment/{id}/like")
+    public ResponseEntity<Message> likeComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        HttpHeaders headers= new HttpHeaders();
+
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        Message message = new Message(HttpStatus.OK.value(), commentService.likeComment(id, userDetails.getUser()), null);
+
+        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+    }
+
 
 }
 

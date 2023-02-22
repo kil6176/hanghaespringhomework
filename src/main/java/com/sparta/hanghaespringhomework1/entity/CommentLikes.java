@@ -8,21 +8,21 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Likes {
+public class CommentLikes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boardId")
-    private Board board;
+    @JoinColumn(name = "commentId")
+    private Comment comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
 
-    public Likes(Board board, User user) {
+    public CommentLikes(Comment comment, User user) {
         this.user = user;
-        this.board = board;
+        this.comment = comment;
     }
 }

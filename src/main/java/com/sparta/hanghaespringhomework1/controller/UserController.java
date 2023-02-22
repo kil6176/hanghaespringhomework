@@ -1,8 +1,8 @@
 package com.sparta.hanghaespringhomework1.controller;
 
 import com.sparta.hanghaespringhomework1.dto.LoginRequestDto;
-import com.sparta.hanghaespringhomework1.dto.SignupRequestDto;
 import com.sparta.hanghaespringhomework1.dto.Message;
+import com.sparta.hanghaespringhomework1.dto.SignupRequestDto;
 import com.sparta.hanghaespringhomework1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -25,11 +27,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid SignupRequestDto signupRequestDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
-        }
-
+    public ResponseEntity<Message> signup(@Valid SignupRequestDto signupRequestDto) {
         userService.signup(signupRequestDto);
 
         Message message = new Message(HttpStatus.OK.value(), "회원가입 완료", null);

@@ -6,12 +6,12 @@ import com.sparta.hanghaespringhomework1.dto.BoardRequestDto;
 import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
 import com.sparta.hanghaespringhomework1.dto.CommentResponseDto;
 import com.sparta.hanghaespringhomework1.entity.Board;
-import com.sparta.hanghaespringhomework1.entity.Likes;
+import com.sparta.hanghaespringhomework1.entity.BoardLikes;
 import com.sparta.hanghaespringhomework1.entity.User;
 import com.sparta.hanghaespringhomework1.entity.UserRoleEnum;
 import com.sparta.hanghaespringhomework1.repository.BoardRepository;
 import com.sparta.hanghaespringhomework1.repository.CommentRepository;
-import com.sparta.hanghaespringhomework1.repository.LikeRepository;
+import com.sparta.hanghaespringhomework1.repository.BoardLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,7 +28,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
 
-    private final LikeRepository likeRepository;
+    private final BoardLikeRepository boardLikeRepository;
 
     private final CommentService commentService;
 
@@ -48,7 +48,7 @@ public class BoardService {
         for (Board board : boardList) {
             List<BoardCommentDto> boardCommentDto = new ArrayList<>();
             List<CommentResponseDto> commentResponseDto = commentService.getCommentList(board.getId());
-            Long likes = likeRepository.countByBoardId(board.getId());
+            Long likes = boardLikeRepository.countByBoardId(board.getId());
             boardCommentDto.add(new BoardCommentDto(board, commentResponseDto, likes));
 
             jsonArray.add(boardCommentDto);
@@ -67,7 +67,7 @@ public class BoardService {
         );
 
         List<CommentResponseDto> commentResponseDto = commentService.getCommentList(board.getId());
-        Long likes = likeRepository.countByBoardId(board.getId());
+        Long likes = boardLikeRepository.countByBoardId(board.getId());
         return new BoardCommentDto(board, commentResponseDto, likes);
     }
 
@@ -105,11 +105,11 @@ public class BoardService {
                 () -> new IllegalArgumentException("게시판이 존재하지 않습니다.")
         );
 
-        if (likeRepository.findByUserIdAndBoardId(user.getId(), id).isEmpty()) {
-            likeRepository.saveAndFlush(new Likes(board, user));
+        if (boardLikeRepository.findByUserIdAndBoardId(user.getId(), id).isEmpty()) {
+            boardLikeRepository.saveAndFlush(new BoardLikes(board, user));
             return "좋아요를 하셨습니다.";
         } else {
-            likeRepository.deleteByUserIdAndBoardId(user.getId(), id);
+            boardLikeRepository.deleteByUserIdAndBoardId(user.getId(), id);
             return "좋아요를 취소하셨습니다.";
         }
     }

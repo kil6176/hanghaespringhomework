@@ -13,7 +13,6 @@ public class BoardCommentDto {
     private String title;
     private String contents;
     private Long likes;
-
     private LocalDateTime modifiedAt;
     private LocalDateTime createdAt;
 

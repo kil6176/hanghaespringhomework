@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -36,14 +37,24 @@ public class ExceptionController {
         return new ResponseEntity<>(message, headers, HttpStatus.UNAUTHORIZED);
     }
 
+    //정규식
+    @ExceptionHandler({BindException.class})
+    public ResponseEntity bindException(BindException ex) {
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
+        Message message = new Message(HttpStatus.BAD_REQUEST.value(),ex.getFieldError().getDefaultMessage(), ex.getBindingResult().getTarget());
+
+        return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+    }
     // 500
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleAll(final Exception ex) {
+    public ResponseEntity handleAll(final Exception ex) {
         Message message = new Message(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), ex);
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
+        System.out.println("에러");
         return new ResponseEntity<>(message, headers, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
