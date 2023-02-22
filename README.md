@@ -1,2 +1,2 @@
 # hanghaespringhomework
-2주차 과제 명세서 https://docs.google.com/spreadsheets/d/e/2PACX-1vT9JjPRMFCc7XrIc6qz23rjTAtzjPcDTdbrBPc7bpolljruu1smkJJESIO37Djrqj2f7CqzOQeZ-Ls1/pubhtml
+3주차 과제 명세서 https://docs.google.com/spreadsheets/d/143S6EHF4YsTTH5mTTW0F4ImQ4jbtZZK6/edit#gid=1075117149
