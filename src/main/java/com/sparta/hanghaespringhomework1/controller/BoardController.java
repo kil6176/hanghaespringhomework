@@ -1,14 +1,11 @@
 package com.sparta.hanghaespringhomework1.controller;
 
 
-import com.sparta.hanghaespringhomework1.dto.BoardCommentDto;
 import com.sparta.hanghaespringhomework1.dto.BoardRequestDto;
-import com.sparta.hanghaespringhomework1.dto.BoardResponseDto;
 import com.sparta.hanghaespringhomework1.entity.Message;
 import com.sparta.hanghaespringhomework1.security.UserDetailsImpl;
 import com.sparta.hanghaespringhomework1.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,23 +24,28 @@ public class BoardController {
     }
 
     @PostMapping("/api/board")
-    public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return boardService.createBoard(requestDto, userDetails.getUser());
+    public ResponseEntity<Message> createBoard(@RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Message message = new Message(HttpStatus.OK.value(), "게시물 생성완료", boardService.createBoard(requestDto, userDetails.getUser()));
+        return ResponseEntity.ok(message);
     }
 
     @GetMapping("/api/board")
-    public JSONObject getBoardList() {
-        return boardService.getBoardList();
+    public ResponseEntity<Message> getBoardList() {
+        Message message = new Message(HttpStatus.OK.value(), "게시물 전체 조회", boardService.getBoardList());
+        return ResponseEntity.ok(message);
     }
 
     @GetMapping("/api/board/{id}")
-    public BoardCommentDto getBoard(@PathVariable Long id) {
-        return boardService.getBoard(id);
+    public ResponseEntity<Message> getBoard(@PathVariable Long id) {
+        Message message = new Message(HttpStatus.OK.value(), "게시물 상세 조회", boardService.getBoard(id));
+        return ResponseEntity.ok(message);
     }
 
     @PutMapping("/api/board/{id}")
-    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return boardService.update(id, requestDto, userDetails.getUser());
+    public ResponseEntity<Message> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        Message message = new Message(HttpStatus.OK.value(), "게시물 수정 완료", boardService.update(id, requestDto, userDetails.getUser()));
+        return ResponseEntity.ok(message);
     }
 
     @DeleteMapping("/api/board/{id}")
@@ -58,6 +60,7 @@ public class BoardController {
     @PostMapping("/api/board/{id}/like")
     public ResponseEntity<Message> likeBoard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         Message message = new Message(HttpStatus.OK.value(), boardService.likeBoard(id, userDetails.getUser()), null);
+
         return ResponseEntity.ok(message);
     }
 }
